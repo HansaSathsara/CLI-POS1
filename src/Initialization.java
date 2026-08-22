@@ -310,6 +310,7 @@ public class Initialization {
         while (true) {
 
 
+
             switch (num) {
 
                 case 1:
