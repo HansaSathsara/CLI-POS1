@@ -2,13 +2,24 @@ import java.util.Scanner;
 
 public class Initialization {
 
-    // Student-Db--------------
+    // Student-DB--------------
 
     static String[] studentNames = new String[100];  // for stores student's names
     static int[] studentAges = new int[100];  // sotores student's age
     static String[] studentEmails = new String[100];  // stores student's own email
     static int studentCounter = -1;  // point of current save student
-    // Student-Db--------------
+    // Student-DB--------------
+
+
+    // Course DB--------------
+
+    static String[] courseNames = new String[100];
+    static int[] courseDuration = new int[100];
+    static double[] courseFee = new double[100];
+    static int courseCounter = -1;
+
+
+    // Course DB--------------
 
 
     static Scanner input = new Scanner(System.in);
@@ -58,7 +69,7 @@ public class Initialization {
 
     // ==========================Student management==========================
 
-    public static void printStudents() {
+    public static void loadAllStudents() {
 
         for (String name : studentNames) {
             System.out.print(name + ", ");
@@ -105,7 +116,7 @@ public class Initialization {
 
         }
 
-        printStudents(); // print all info of students
+        loadAllStudents(); // print all info of students
 
         System.out.println("Please Enter Student (" + (studentCounter + 1 + 1) + ")" + "name:");
         String sName = input.nextLine();
@@ -170,7 +181,7 @@ public class Initialization {
         }
 
 
-        printStudents();
+        loadAllStudents();
 
         System.out.println("Please Enter Student Id: ");
         int indexsId = input.nextInt(); // do not use 0
@@ -218,6 +229,8 @@ public class Initialization {
 
         }
 
+        loadAllStudents();
+
         System.out.println("Please enter student Id: ");
         int indexId = input.nextInt(); // please only enter starting 1
         clearNewLine();
@@ -243,6 +256,44 @@ public class Initialization {
 
     public static void searchStudent() {
 
+        System.out.println("Enter Search Text: ");
+        String searchText = input.nextLine();
+
+        // search is exit or not provide student name
+
+        for (int i = 0; i <= studentCounter; i++) {
+
+            if (searchText != null && studentNames[i].contains(searchText)) {
+
+                System.out.println(studentNames[i]);
+
+            }
+        }
+        System.out.println("Student not found!");
+    }
+
+    public static void viewAllStudent() {
+
+        if (isEmpty()) {
+            System.out.println("Cannot allowcate to do this operation!");
+            return;
+
+        }
+
+        boolean isValid = false;
+        for (int i = 0; i < studentCounter; i++) {
+
+            if (studentNames[i] != null && studentAges[i] != 0 && studentEmails[i] != null) {
+                String saveStudent = String.format("Name: %s | Age: %d | Email: %s ", studentNames[i], studentAges[i], studentEmails[i]);
+                isValid = true;
+            }
+
+
+        }
+        if (!isValid) {
+            System.out.println("Student not found");
+        }
+
 
     }
 
@@ -250,6 +301,7 @@ public class Initialization {
     private static void manageStudent() {
 
         System.out.println("Manage Student,");
+        printDevider();
 
         while (true) {
 
@@ -270,13 +322,24 @@ public class Initialization {
                 case 2:
                     UpdateStudent(); //updateStudent
                     break;
-                case 3: //deleteStudent
+                case 3:
                     deleteStudent();
-                case 4: //searchStudent
+                    break;//deleteStudent
+                case 4:
                     searchStudent();
-                case 5: //viewAll
-                case 6: //back
-                case 7: //exit
+                    break; //searchStudent
+                case 5:
+                    viewAllStudent();
+                    break;
+                case 6:
+                    return;
+                case 7:
+                    goodBye();
+                    break;
+
+                default:
+                    System.out.println("Idiot,Wrong Input,Please Try Again! \uD83D\uDE14");
+
 
             }
 
@@ -287,10 +350,52 @@ public class Initialization {
     }
 
 
+    //print devider============================
+    public static void printDevider() {
+        System.out.println("=========================================");
+    }
+
+    //print devider============================
+
+    public static void goodBye() {
+
+        System.exit(0);
+
+
+    }
 
 
     // ==========================Student management==========================
+
+    // ---------Course Question
+
+    String[] printC = {
+
+            "1)Save Course",
+            "2)Update  Course",
+            "3)Delete Course",
+            "4)Search Course",
+            "5)VewAll Course",
+            "6)Back",
+            "7)Exit"
+
+    };
+
+    // ---------Course Question
+
+
+    public static void loadAllCourses() {
+
+
+    }
+
+
     public static void manageCourse() {
+
+        System.out.println("Manages Courses,");
+        printDevider();
+
+
     }
 
 
@@ -308,7 +413,6 @@ public class Initialization {
         clearNewLine();
 
         while (true) {
-
 
 
             switch (num) {
