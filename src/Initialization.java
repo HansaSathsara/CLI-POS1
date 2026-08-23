@@ -13,11 +13,10 @@ public class Initialization {
 
     // Course DB--------------
 
-    static String[] courseNames = new String[100];
-    static int[] courseDuration = new int[100];
-    static double[] courseFee = new double[100];
-    static int courseCounter = -1;
-
+    static String[] courseNames = new String[100]; // for stores course's names
+    static int[] courseDuration = new int[100]; // stores course's duration of time
+    static double[] courseFee = new double[100]; // store course's course fee
+    static int courseCounter = -1; // point of currently save course
 
     // Course DB--------------
 
@@ -358,7 +357,7 @@ public class Initialization {
     //print devider============================
 
     public static void goodBye() {
-
+        System.out.println("Good bye...\uD83D\uDC4B\uD83D\uDE0A");
         System.exit(0);
 
 
@@ -369,7 +368,7 @@ public class Initialization {
 
     // ---------Course Question
 
-    String[] printC = {
+    static String[] printC = {
 
             "1)Save Course",
             "2)Update  Course",
@@ -389,14 +388,77 @@ public class Initialization {
 
     }
 
+    // ========================Course management========================
+
+    public static void saveCourse() {
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public static void manageCourse() {
 
         System.out.println("Manages Courses,");
         printDevider();
 
+        while (true) {
+
+
+            for (String courseQ : printC) {
+
+                System.out.println(courseQ);
+
+            }
+            System.out.println();
+
+            int num = input.nextInt();
+            clearNewLine();
+
+            switch (num) {
+
+                case 1: saveCourse();// saveCourse
+                case 2: // updateCourse
+                case 3: // deleteCourse
+                case 4: // searchCourse
+                case 5: // viewAll
+                case 6: //back
+                    return;
+                case 7: // exit
+                    goodBye();
+                default:
+                    System.out.println("Idiot,Wrong Input,Please Try Again! \uD83D\uDE14");
+                    return;
+
+            }
+
+
+        }
+
 
     }
+
+
+
+    // ========================Course management========================
+
+
+
 
 
     public static void manageEnrollment() {
@@ -405,15 +467,15 @@ public class Initialization {
 
     public static void main(String[] args) {
 
-        printPrimaryQ();
-        printQ();
-
-
-        int num = input.nextInt();
-        clearNewLine();
 
         while (true) {
 
+            printPrimaryQ();
+            printQ();
+
+
+            int num = input.nextInt();
+            clearNewLine();
 
             switch (num) {
 
@@ -426,8 +488,11 @@ public class Initialization {
                 case 3:
                     manageEnrollment();
                     break;
+                case 4:
+                    goodBye();
                 default:
                     System.out.println("Idiot,Wrong Input,Please Try Again! \uD83D\uDE14");
+                    return;
             }
 
 
