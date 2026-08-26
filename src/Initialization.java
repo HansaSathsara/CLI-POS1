@@ -235,6 +235,12 @@ public class Initialization {
         clearNewLine();
         indexId--;
 
+        if (indexId <= 0 || indexId > 100) {
+
+            System.out.println("Student not found!");
+            return;
+        }
+
         String sName = studentNames[indexId];
         String sEmail = studentEmails[indexId];
 
@@ -385,31 +391,212 @@ public class Initialization {
 
     public static void loadAllCourses() {
 
+        for (String course : courseNames) {
+
+            System.out.print(course + ", ");
+        }
+        System.out.println();
 
     }
+
+
+    public static void loadAllCoursesFee() {
+
+        for (double cFees : courseFee) {
+
+            System.out.print(cFees + ", ");
+        }
+        System.out.println();
+    }
+
+    public static void loadAllCourseTimers() {
+
+        for (int cTimer : courseDuration) {
+
+            System.out.print(cTimer + ", ");
+        }
+        System.out.println();
+    }
+
 
     // ========================Course management========================
 
     public static void saveCourse() {
 
+        loadAllCourses();
+
+        // store course name
+        System.out.println("Please Enter course (" + (courseCounter + 1) + ")" + "name :");
+        String cname = input.nextLine();
+        String covrtedText = cname.toLowerCase();
+
+        // store provide course's duration
+        boolean isValid = false;
+        int durC = 0;
+        while (!isValid) {
+
+
+            loadAllCourseTimers();
+
+            System.out.println("Please Enter Course Duration: ");
+            String duration = input.nextLine();
+
+            try {
+                durC = Integer.parseInt(duration);
+
+                if (durC > 0) {
+
+                    isValid = true;
+                } else {
+
+                    System.out.println("Not valid time duration!");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Please Provide only Numbers!");
+            }
+
+        }
+        System.out.println("Course duration saved!");
+
+        // store provide course's fees
+
+        loadAllCoursesFee();
+
+        boolean isChecker = false;
+        double cFee = 0.0;
+
+        while (!isChecker) {
+
+            System.out.println("Please Enter Course fee (LKR):");
+            cFee = input.nextDouble();
+
+            if (cFee < 0) {
+                System.out.println("Not valid! Try Again!");
+            } else {
+
+                isChecker = true;
+            }
+
+        }
+        System.out.println("Course Payment Successfully!");
+
+        courseCounter++;
+        courseNames[courseCounter] = covrtedText;
+        courseDuration[courseCounter] = durC;
+        courseFee[courseCounter] = cFee;
+        String cSummery = String.format("Name: %s | Duration: %dh | Fee: LKR%.2f", cname, durC, cFee);
+        System.out.println(cSummery);
+
 
     }
 
+    public static void updateCourse() {
+
+        System.out.println("Please Enter course Id: ");
+        int cIndex = input.nextInt(); // not use 0
+        cIndex--;
+        clearNewLine();
+
+        String cName = courseNames[cIndex];
+
+        if (cName != null) {
+
+            System.out.println("Course found and name is-" + cName);
+            System.out.println("Insert New course Name :");
+            String nCname = input.nextLine();
+            courseNames[cIndex] = cName;
+
+            System.out.println("Do you want change Course Duration and Fees?(Y/N) :");
+            String option = input.nextLine();
+            String lConfirm = option.toLowerCase(); // convert to lowerCase
 
 
+            if (lConfirm.equals("y")) {
+
+                System.out.println("Insert new course fee(LKR) :");
+                double newFee = input.nextDouble();
+                clearNewLine();
+                courseFee[cIndex] = newFee;
+
+                System.out.println("Insert new course Duratione(hrs) :");
+                int nDur = input.nextInt();
+                clearNewLine();
+                courseDuration[cIndex] = nDur;
+                System.out.println("Course details updated!");
+
+            } else if (lConfirm.equals("no")) {
+
+                System.out.println("Confirming...");
+            } else {
+
+                System.out.println("Invalid!");
+            }
 
 
+        }
 
 
+    }
+
+    public static void deleteCourse() {
+
+        System.out.println("Please Enter Course Id: ");
+        int cIndex = input.nextInt(); // dont use 0
+        cIndex--;
+
+        String cName = input.nextLine();
+
+        if (cName != null) {
+
+            courseNames[cIndex] = null;
+            courseDuration[cIndex] = 0;
+            courseFee[cIndex] = 0.0;
+            courseCounter--;
+            System.out.println("Course deleted!" + cName);
+        } else {
+
+            System.out.println("Course not found!");
+        }
 
 
+    }
+
+    public static void searchCourse() {
+
+        System.out.println("Enter SearchText:");
+        String searchTxt = input.nextLine();
+
+        String lowerCname = searchTxt.toLowerCase();
 
 
+        for (int i = 0; i <= courseCounter; i++) {
+
+            if (courseNames[i].contains(lowerCname)) {
+
+                System.out.println(courseNames[i]);
+
+            }
+
+        }
+        System.out.println("course not found!");
 
 
+    }
+
+    public static void viewAll() {
 
 
+        for (int i = 0; i <= courseCounter; i++) {
 
+            if (courseNames[i] != null && courseDuration[i] != 0 && courseFee[i] != 0) {
+
+                String cSummery = String.format("Name: %s | Duration: %dh | Fee: LKR%.2f", courseNames[i], courseDuration[i], courseFee[i]);
+                System.out.println(cSummery);
+            }
+
+        }
+
+    }
 
 
     public static void manageCourse() {
@@ -432,15 +619,26 @@ public class Initialization {
 
             switch (num) {
 
-                case 1: saveCourse();// saveCourse
-                case 2: // updateCourse
-                case 3: // deleteCourse
-                case 4: // searchCourse
-                case 5: // viewAll
+                case 1:
+                    saveCourse();// saveCourse
+                    break;
+                case 2:
+                    updateCourse();// updateCourse
+                    break;
+                case 3:
+                    deleteCourse(); // deleteCourse
+                    break;
+                case 4:
+                    searchCourse(); // searchCourse
+                    break;
+                case 5:
+                    viewAll();  // viewAll
+                    break;
                 case 6: //back
                     return;
                 case 7: // exit
                     goodBye();
+                    break;
                 default:
                     System.out.println("Idiot,Wrong Input,Please Try Again! \uD83D\uDE14");
                     return;
@@ -454,14 +652,52 @@ public class Initialization {
     }
 
 
-
     // ========================Course management========================
 
 
+    //  ========================Enrolment Management ========================
 
+
+    static String[] printRegister = {
+
+            "1)Enroll Student",
+            "2)View All Enrolments",
+            "3)Delete Enrolment",
+            "4)Back",
+            "5)Exit"
+
+    };
+
+
+    //  ========================Enrolment Management ========================
 
 
     public static void manageEnrollment() {
+
+        System.out.println("Manage Enroll Process,");
+        printDevider();
+
+
+        for (String registerQ : printRegister) {
+
+            System.out.print(registerQ);
+
+        }
+        System.out.println();
+
+        int num=input.nextInt();
+
+        switch (num){
+
+            case 1: // enrollStudent
+            case 2:// view allEnrollment
+            case 3: //cancelEnrollment
+            case 4:
+            case 5:
+            default:
+        }
+
+
     }
 
 
